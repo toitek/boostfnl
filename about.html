@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!-- AlpineJS -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
+    <script defer src="js/app.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="./images/logos/favicon.svg" />
+    <title>BoostingAI</title>
+    <meta
+      name="description"
+      content="Transform your content or blog from static to dynamic, so that users can talk to it, using GPT-4. Just export your data, it’s that simple. Style it as you want, matching your site."
+    />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <!-- 
+      The navigation uses Alpine.js for both the programs dropdown and the mobile navigation menu. If you're
+      not familiar with Alpine you can check out their documentation 
+      here: https://alpinejs.dev/start-here
+    -->
+    <header class="relative h-24 bg-amber-100" x-data="{ mobileMenuOpen: false }">
+      <!-- Main navbar for large screens -->
+      <div
+        class="relative z-30 mx-auto flex h-full w-full max-w-screen-xl items-center border-b border-gray-secondary-300/60 bg-amber-100 px-4 sm:px-6 lg:px-8"
+      >
+        <nav class="flex w-full items-center justify-between">
+          <div class="flex items-center space-x-8 lg:space-x-12">
+            <!-- Logo-->
+            <a href="index.html" aria-label="Home" class="flex flex-shrink-0 items-center">
+              <!-- <img src="images/logo-dark.png" class="h-7 w-auto sm:h-8 md:hidden lg:block lg:h-9" />
+              <img src="images/logo-icon.png" class="hidden h-7 w-auto md:block lg:hidden" />-->
+            </a>
+
+            <div class="hidden items-center space-x-3 md:flex lg:space-x-4">
+              <a href="index.html" class="home inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> Home </a>
+              <a href="about.html" class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> About </a>
+              <a href="pricing.html" class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> Pricing </a>
+              <a href="contact.html" class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> Contact </a>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center space-x-4">
+              <div class="hidden lg:block">
+                <a href="signin.html" class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900 sign-in hidden">
+                  Sign in
+                </a>
+              </div>
+              <a
+                class="group inline-flex items-center justify-center bg-slate-700 px-5 py-2.5 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900 sign-up hidden"
+                href="signup.html"
+              >
+                Sign up free
+              </a>
+              <div class="md:hidden">
+                <div>
+                  <button
+                    class="group relative z-50 flex cursor-pointer items-center justify-center border border-gray-secondary-400/75 bg-gray-secondary-50 p-3 transition duration-300 ease-in-out focus:outline-none md:hidden"
+                    aria-label="Toggle Navigation"
+                    @click="mobileMenuOpen=!mobileMenuOpen"
+                  >
+                    <span class="relative h-3.5 w-4">
+                      <span
+                        class="absolute block h-0.5 rotate-0 transform rounded-full bg-slate-600 opacity-100 transition-all duration-200 ease-linear group-hover:bg-slate-900"
+                        :class="mobileMenuOpen ? 'w-0 top-1.5 left-1/2' : 'left-0 top-0 w-full'"
+                      ></span>
+                      <span
+                        class="absolute left-0 top-1.5 block h-0.5 w-full transform rounded-full bg-slate-600 opacity-100 transition-all duration-200 ease-linear group-hover:bg-gray-900"
+                        :class="mobileMenuOpen ? 'rotate-45' : 'rotate-0'"
+                      ></span>
+                      <span
+                        class="absolute left-0 top-1.5 block h-0.5 w-full transform rounded-full bg-slate-600 opacity-100 transition-all duration-200 ease-linear group-hover:bg-gray-900"
+                        :class="mobileMenuOpen ? '-rotate-45' : 'rotate-0'"
+                      ></span>
+                      <span
+                        class="absolute block h-0.5 rotate-0 transform rounded-full bg-slate-600 opacity-100 transition-all duration-200 ease-linear group-hover:bg-gray-900"
+                        :class="mobileMenuOpen ? 'left-1/2 top-1.5 w-0' : 'left-0 top-3 w-full'"
+                      ></span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Mobile Menu-->
+      <div class="md:hidden">
+        <div
+          x-show="mobileMenuOpen"
+          x-transition:enter="duration-200 ease-out"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="duration-200 ease-in"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          class="fixed inset-0 z-20 bg-slate-900 bg-opacity-25 backdrop-blur"
+        ></div>
+
+        <div
+          x-show="mobileMenuOpen"
+          x-transition:enter="duration-300 ease-out"
+          x-transition:enter-start="opacity-0 scale-95"
+          x-transition:enter-end="opacity-100 scale-100"
+          x-transition:leave="duration-200 ease-in"
+          x-transition:leave-start="opacity-100 scale-100"
+          x-transition:leave-end="opacity-0 scale-95"
+          class="absolute inset-x-0 top-24 z-30 overflow-hidden bg-amber-100 px-5 pb-8 pt-4 duration-300"
+          @click.away="mobileMenuOpen = false"
+        >
+          <div>
+            <div>
+              <div class="flex flex-col divide-y divide-gray-secondary-400/75">
+                <a href="index.html" class="home-md block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> Home </a>
+                <a href="about.html" class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> About </a>
+                <a href="pricing.html" class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> Pricing </a>
+                <a href="contact.html" class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"> Contact </a>
+              </div>
+              <div class="mt-6">
+                <a
+                  href="signin.html"
+                  class="group inline-flex w-full items-center justify-center border border-slate-800 px-5 py-2.5 text-base font-medium text-slate-800 duration-150 ease-in-out hover:bg-slate-800 hover:text-white hidden sign-in"
+                >
+                  Sign in
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- About Hero -->
+    <section class="relative overflow-hidden bg-amber-100 pt-16 sm:pt-24">
+      <!-- Header Content -->
+      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center">
+          <p class="flex items-center space-x-3.5 text-xl font-medium text-amber-900/70">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="3" viewBox="0 0 28 3" fill="none">
+              <line y1="1.5" x2="28" y2="1.5" stroke="currentColor" strokeOpacity="0.65" strokeWidth="3" />
+            </svg>
+
+            <span>About BoostingAI</span>
+          </p>
+          <h1
+            class="mt-5 text-center text-4xl font-semibold leading-snug text-slate-900 sm:mt-6 sm:text-5xl sm:leading-snug md:mx-auto md:max-w-4xl xl:mx-0"
+          >
+            Welcome to the future of digital interaction! With our revolutionary platform, transitioning from a blog to a chatbot has never been
+            easier or faster. In just a few moments, you can breathe life into your content, transforming static pages into dynamic AI chat
+            experiences.
+          </h1>
+        </div>
+      </div>
+
+      <div class="relative">
+        <!-- Background -->
+        <div class="absolute inset-0 flex flex-col">
+          <div class="flex-1 bg-amber-100"></div>
+          <div class="w-full flex-1 bg-vanilla"></div>
+          <div class="flex-1 bg-vanilla"></div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="relative mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+          <div class="mt-16 grid grid-cols-12 gap-3 sm:mt-24 lg:gap-5">
+            <div class="col-span-6 flex flex-col gap-3 sm:col-span-4 lg:gap-5">
+              <img class="h-auto w-full object-cover object-center" src="images/stock/gallery-01.jpg" alt="Gallery 01" />
+              <img class="ml-auto h-auto w-full object-cover object-center md:w-2/3" src="images/stock/gallery-02.jpg" alt="Gallery 02" />
+            </div>
+            <div class="col-span-4 hidden flex-col gap-3 sm:flex md:col-span-2 lg:gap-5">
+              <img class="h-auto w-full object-cover object-center md:mt-12" src="images/stock/gallery-03.jpg" alt="Gallery 03" />
+              <img class="ml-auto hidden h-auto w-full object-cover object-center md:block" src="images/stock/gallery-04.jpg" alt="Gallery 04" />
+            </div>
+            <div class="col-span-6 flex flex-col gap-3 sm:col-span-4 lg:gap-5">
+              <img class="ml-auto h-auto w-full object-cover object-center md:w-1/2" src="images/stock/gallery-06.jpg" alt="Gallery 06" />
+              <img class="h-auto w-full object-cover object-center" src="images/stock/gallery-05.jpg" alt="Gallery 05" />
+            </div>
+            <div class="col-span-2 hidden flex-col gap-3 md:flex lg:gap-5">
+              <img class="mt-12 h-auto w-full object-cover object-center" src="images/stock/gallery-07.jpg" alt="Gallery 07" />
+            </div>
+          </div>
+        </div>
+        <div class="h-16 bg-vanilla sm:h-24"></div>
+      </div>
+    </section>
+
+    <!-- Story With Stats -->
+    <section class="relative overflow-hidden bg-vanilla pb-[532px] pt-16 sm:pb-[500px] sm:pt-24 md:pb-64">
+      <!-- Container -->
+      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+
+        <!-- Content -->
+
+        <!-- Image With Stats -->
+        <div class="relative mt-16 sm:mt-20">
+          <!-- Image -->
+          <div class="aspect-video">
+            <img class="h-full w-full object-cover object-center" src="images/stock/team.jpg" alt="Team" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="overflow-hidden bg-slate-700 pb-12 pt-20">
+      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+          <div class="max-w-xl lg:col-span-4 lg:max-w-none">
+            <!-- Logo -->
+            <a href="index.html" aria-label="Home" class="flex flex-shrink-0">
+              <h1
+                class="text-5xl font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-6xl xl:leading-tighter"
+              >
+                BoostingAI
+              </h1>
+            </a>
+
+            <!-- Social media links -->
+            <div class="mt-8 flex items-center gap-4">
+              <a href="#" class="group">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  class="fill-slate-100/90 duration-150 group-hover:fill-slate-50"
+                >
+                  <path
+                    d="M7.52866 20L7.5 11.25H3.75V7.5H7.5V5C7.5 1.626 9.58939 0 12.5992 0C14.041 0 15.2801 0.107338 15.6412 0.155313V3.68134L13.5537 3.68229C11.9168 3.68229 11.5998 4.46012 11.5998 5.60155V7.5H16.25L15 11.25H11.5998V20H7.52866Z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="group">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  class="fill-slate-100/90 duration-150 group-hover:fill-slate-50"
+                >
+                  <path
+                    d="M19.75 6C19.5 4.375 18.75 3.25 17 3C14.25 2.5 10 2.5 10 2.5C10 2.5 5.75 2.5 3 3C1.25 3.25 0.375 4.375 0.25 6C0 7.625 0 10 0 10C0 10 0 12.375 0.25 14C0.5 15.625 1.25 16.75 3 17C5.75 17.5 10 17.5 10 17.5C10 17.5 14.25 17.5 17 17C18.75 16.625 19.5 15.625 19.75 14C20 12.375 20 10 20 10C20 10 20 7.625 19.75 6ZM7.5 13.75V6.25L13.75 10L7.5 13.75Z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="group">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  class="fill-slate-100/90 duration-150 group-hover:fill-slate-50"
+                >
+                  <path
+                    d="M20 3.75C19.25 4.125 18.5 4.25 17.625 4.375C18.5 3.875 19.125 3.125 19.375 2.125C18.625 2.625 17.75 2.875 16.75 3.125C16 2.375 14.875 1.875 13.75 1.875C11.625 1.875 9.75 3.75 9.75 6C9.75 6.375 9.75 6.625 9.875 6.875C6.5 6.75 3.375 5.125 1.375 2.625C1 3.25 0.875 3.875 0.875 4.75C0.875 6.125 1.625 7.375 2.75 8.125C2.125 8.125 1.5 7.875 0.875 7.625C0.875 9.625 2.25 11.25 4.125 11.625C3.75 11.75 3.375 11.75 3 11.75C2.75 11.75 2.5 11.75 2.25 11.625C2.75 13.25 4.25 14.5 6.125 14.5C4.75 15.625 3 16.25 1 16.25C0.625 16.25 0.375 16.25 0 16.25C1.875 17.375 4 18.125 6.25 18.125C13.75 18.125 17.875 11.875 17.875 6.5C17.875 6.375 17.875 6.125 17.875 6C18.75 5.375 19.5 4.625 20 3.75Z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="group">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  class="fill-slate-100/90 duration-150 group-hover:fill-slate-50"
+                >
+                  <g clipPath="url(#clip0_107_952)">
+                    <path
+                      d="M10 1.80125C12.67 1.80125 12.9862 1.8125 14.0413 1.86C14.6752 1.86762 15.3031 1.98432 15.8975 2.205C16.3322 2.3656 16.7253 2.62192 17.0475 2.955C17.3806 3.27724 17.6369 3.67027 17.7975 4.105C18.0182 4.69937 18.1349 5.32729 18.1425 5.96125C18.19 7.01625 18.2013 7.33625 18.2013 10.0025C18.2013 12.6687 18.19 12.9887 18.1425 14.0437C18.1349 14.6777 18.0182 15.3056 17.7975 15.9C17.6315 16.3314 17.3768 16.7232 17.05 17.05C16.7232 17.3768 16.3314 17.6315 15.9 17.7975C15.3056 18.0182 14.6777 18.1349 14.0437 18.1425C12.9887 18.19 12.6687 18.2013 10.0025 18.2013C7.33625 18.2013 7.01625 18.19 5.96125 18.1425C5.32729 18.1349 4.69937 18.0182 4.105 17.7975C3.67027 17.6369 3.27724 17.3806 2.955 17.0475C2.62192 16.7253 2.3656 16.3322 2.205 15.8975C1.98432 15.3031 1.86762 14.6752 1.86 14.0413C1.8125 12.9862 1.80125 12.6663 1.80125 10C1.80125 7.33375 1.8125 7.01375 1.86 5.95875C1.86762 5.32479 1.98432 4.69687 2.205 4.1025C2.3656 3.66777 2.62192 3.27474 2.955 2.9525C3.27724 2.61942 3.67027 2.3631 4.105 2.2025C4.69937 1.98182 5.32729 1.86512 5.96125 1.8575C7.01625 1.81 7.33625 1.79875 10.0025 1.79875M10 0C7.28375 0 6.94375 0.01125 5.875 0.06C5.0462 0.0768543 4.22625 0.234082 3.45 0.525C2.78245 0.775698 2.17788 1.1695 1.67875 1.67875C1.1695 2.17788 0.775698 2.78245 0.525 3.45C0.234082 4.22625 0.0768543 5.0462 0.06 5.875C0.01125 6.94375 0 7.28375 0 10C0 12.7163 0.01125 13.0563 0.06 14.125C0.0768543 14.9538 0.234082 15.7738 0.525 16.55C0.775698 17.2175 1.1695 17.8221 1.67875 18.3212C2.17788 18.8305 2.78245 19.2243 3.45 19.475C4.22704 19.7662 5.04786 19.9234 5.8775 19.94C6.94375 19.9888 7.28375 20 10 20C12.7163 20 13.0563 19.9888 14.125 19.94C14.9546 19.9234 15.7755 19.7662 16.5525 19.475C17.2168 19.2179 17.82 18.8249 18.3237 18.3212C18.8274 17.8175 19.2204 17.2143 19.4775 16.55C19.7687 15.773 19.9259 14.9521 19.9425 14.1225C19.9913 13.0563 20.0025 12.7163 20.0025 9.9975C20.0025 7.27875 19.9913 6.94125 19.9425 5.8725C19.9246 5.0444 19.7665 4.22531 19.475 3.45C19.2243 2.78245 18.8305 2.17788 18.3212 1.67875C17.8221 1.1695 17.2175 0.775698 16.55 0.525C15.7738 0.234082 14.9538 0.0768543 14.125 0.06C13.0563 0.01125 12.7163 0 10 0Z"
+                    />
+                    <path
+                      d="M9.99999 4.86523C8.98439 4.86523 7.99159 5.1664 7.14714 5.73064C6.30269 6.29488 5.64453 7.09686 5.25587 8.03516C4.86722 8.97345 4.76553 10.0059 4.96366 11.002C5.1618 11.9981 5.65086 12.9131 6.369 13.6312C7.08714 14.3494 8.00211 14.8384 8.9982 15.0366C9.9943 15.2347 11.0268 15.133 11.9651 14.7444C12.9034 14.3557 13.7053 13.6975 14.2696 12.8531C14.8338 12.0086 15.135 11.0158 15.135 10.0002C15.135 9.3259 15.0022 8.65816 14.7441 8.03516C14.4861 7.41215 14.1078 6.84607 13.631 6.36924C13.1542 5.89241 12.5881 5.51417 11.9651 5.25611C11.3421 4.99806 10.6743 4.86523 9.99999 4.86523ZM9.99999 13.334C9.34064 13.334 8.69609 13.1385 8.14786 12.7721C7.59963 12.4058 7.17233 11.8852 6.92001 11.276C6.66769 10.6668 6.60167 9.99654 6.7303 9.34985C6.85893 8.70317 7.17644 8.10915 7.64268 7.64292C8.10891 7.17668 8.70293 6.85918 9.34961 6.73054C9.99629 6.60191 10.6666 6.66793 11.2758 6.92025C11.8849 7.17257 12.4056 7.59987 12.7719 8.1481C13.1382 8.69633 13.3337 9.34088 13.3337 10.0002C13.3337 10.8844 12.9825 11.7324 12.3573 12.3576C11.7321 12.9828 10.8842 13.334 9.99999 13.334Z"
+                    />
+                    <path
+                      d="M15.3375 5.86289C16.0002 5.86289 16.5375 5.32563 16.5375 4.66289C16.5375 4.00015 16.0002 3.46289 15.3375 3.46289C14.6748 3.46289 14.1375 4.00015 14.1375 4.66289C14.1375 5.32563 14.6748 5.86289 15.3375 5.86289Z"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_107_952">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+              <a href="#" class="group">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  class="fill-slate-100/90 duration-150 group-hover:fill-slate-50"
+                >
+                  <path
+                    d="M8.49125 7.4475V10.8825C8.05863 10.7684 7.60593 10.7529 7.16651 10.837C6.72709 10.9211 6.31215 11.1028 5.95228 11.3686C5.59241 11.6345 5.29678 11.9777 5.08719 12.3729C4.87759 12.7682 4.75937 13.2055 4.74125 13.6525C4.7158 14.0379 4.77324 14.4243 4.90969 14.7857C5.04614 15.147 5.25843 15.475 5.53227 15.7474C5.8061 16.0198 6.13513 16.2304 6.4972 16.365C6.85926 16.4995 7.24596 16.5549 7.63125 16.5275C8.01976 16.557 8.41005 16.5019 8.7752 16.366C9.14035 16.23 9.47167 16.0165 9.74629 15.7401C10.0209 15.4637 10.2323 15.131 10.3659 14.765C10.4995 14.399 10.552 14.0083 10.52 13.62V0H13.9187C14.4975 3.595 16.2937 4.43 18.7025 4.815V8.26C17.0341 8.12366 15.4246 7.5803 14.015 6.6775V13.4837C14.0125 16.5625 12.1875 20 7.65625 20C6.80632 19.9961 5.96571 19.8226 5.18368 19.4897C4.40165 19.1569 3.69392 18.6712 3.10195 18.0613C2.50998 17.4515 2.04569 16.7295 1.73627 15.9379C1.42685 15.1463 1.27853 14.3009 1.3 13.4513C1.32672 12.5664 1.54073 11.6973 1.9279 10.9013C2.31506 10.1052 2.8666 9.40028 3.54613 8.83297C4.22566 8.26565 5.01774 7.84884 5.87014 7.61002C6.72254 7.37121 7.61588 7.31582 8.49125 7.4475Z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Links Columns -->
+          <div class="mt-12 grid grid-cols-12 gap-8 lg:col-span-8 lg:mt-0">
+            <!-- Column 1 -->
+            <div class="col-span-6 md:col-span-3">
+              <p class="text-md font-semibold text-white">Company</p>
+              <div class="mt-4 flex flex-col space-y-3">
+                <a href="about.html" class="text-md text-slate-100 duration-150 hover:text-white"> About us </a>
+                <a href="#" class="text-md text-slate-100 duration-150 hover:text-white"> Privacy </a>
+                <a href="contact.html" class="text-md text-slate-100 duration-150 hover:text-white"> Contact us </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="mt-16 border-gray-secondary-400/60" />
+
+        <div class="flex w-full flex-col justify-between pt-8 sm:flex-row">
+          <p class="text-md text-slate-200">© 2023 BoostingAI. All rights reserved.</p>
+          <div class="mt-5 flex gap-3 sm:mt-0">
+            <a href="#" class="text-md text-slate-100 underline duration-150 hover:text-white"> Terms </a>
+
+            <a href="#" class="text-md text-slate-100 underline duration-150 hover:text-white"> Privacy </a>
+
+            <a href="#" class="text-md text-slate-100 underline duration-150 hover:text-white"> Cookies </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

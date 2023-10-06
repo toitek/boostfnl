@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/main.css" />
+
+    <link rel="icon" href="./images/logos/favicon.svg" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+    <script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.2.4/firebase-auth.js"></script>
+
+    <script defer src="js/auth.js"></script>
+
+    <title>BoostingAI</title>
+    <meta
+      name="description"
+      content="Transform your content or blog from static to dynamic, so that users can talk to it, using GPT-4. Just export your data, it’s that simple. Style it as you want, matching your site."
+    />
+  </head>
+  <body>
+    <section class="relative flex min-h-screen items-center justify-center bg-amber-100 py-16 sm:py-20">
+      <a
+        href="index.html"
+        class="group absolute right-8 top-8 hidden cursor-pointer items-center justify-center border border-gray-secondary-400/60 bg-gray-secondary-50 p-2 transition duration-150 ease-in-out hover:bg-vanilla focus:outline-none sm:flex lg:right-12 lg:top-12"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-5 w-5 text-slate-800"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </a>
+
+      <!-- Container -->
+      <div class="mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto flex max-w-lg flex-col items-center">
+          <!-- Logo -->
+          <!-- <a href="index.html" class="flex flex-shrink-0">
+            <img src="images/logo-icon.png" class="h-auto w-12" />
+          </a> -->
+
+          <h1 class="mt-10 text-center text-4xl font-semibold text-slate-900"><a href="index.html" class="flex flex-shrink-0">BoostingAI</a></h1>
+          <h1 class="mt-10 text-center text-4xl font-semibold text-slate-900">update password</h1>
+          <p class="mx-auto mt-4 max-w-md text-center leading-relaxed text-slate-600">Enter your new password here</p>
+
+          <!-- Form container -->
+          <div class="mt-10 w-full">
+            <form action="#" method="POST">
+              <div>
+                <label for="password" class="block text-base font-medium text-slate-700"> Password </label>
+                <div class="relative mt-1.5">
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="password"
+                    required
+                    placeholder="Enter new password here"
+                    class="block w-full appearance-none border border-gray-secondary-400/60 bg-gray-secondary-50 py-2.5 pl-12 pr-8 text-slate-800 placeholder-slate-500/75 outline-none duration-150 hover:bg-vanilla focus:border-gray-secondary-200 focus:bg-vanilla focus:outline-none focus:ring-gray-secondary-200"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <p style="color: green" class="confirm-text"></p>
+              <button
+                class="update h-10 group mt-8 inline-flex w-full items-center justify-center bg-slate-700 px-6 py-3 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900 sm:mt-10 xl:px-7 xl:py-4 xl:text-lg relative"
+              >
+                <span id="submitText"> Update password </span>
+                <div class="absolute inset-0 flex items-center justify-center hidden" id="spinner">
+                  <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 7.96 0 014 12H0c0 3.042 1.135 5.86 3.008 8h4a8 8 0 01-1.992-14.709l-.006-.002L4 9.291z"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+            </form>
+
+            <p class="mt-4 text-center leading-relaxed text-slate-600">
+              Remembered your password?
+              <a href="signin.html" class="ml-1.5 font-medium text-slate-800 underline duration-150 hover:text-slate-900"> Sign in </a>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
